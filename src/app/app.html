@@ -1,0 +1,102 @@
+<div class="quiz-container">
+  <h1>Wizengamot Quiz: Harry Potter Edition</h1>
+
+  @if (!gameStarted()) {
+    <!-- Schermata Iniziale: Selezione Difficoltà -->
+    <div class="start-card">
+      <p class="start-subtitle">MODALITÀ SURVIVAL ENDLESS</p>
+      
+      <div class="difficulty-grid">
+        <button class="diff-btn babbano" (click)="selectDifficulty('Babbano')">
+          BABBANO (Facile)<br><span>⏱️ 20s base | ❤️ x5</span>
+        </button>
+        
+        <button class="diff-btn mago" (click)="selectDifficulty('Mago')">
+          MAGO (Normale)<br><span>⏱️ 15s base | ❤️ x3</span>
+        </button>
+        
+        <button class="diff-btn auror" (click)="selectDifficulty('Auror')">
+          AUROR (Difficile)<br><span>⏱️ 8s base | ❤️ x1</span>
+        </button>
+      </div>
+    </div>
+  } @else if (!quizComplete()) {
+    <!-- Schermata del Quiz Attivo -->
+    <div class="question-card">
+      
+      <div class="quiz-header">
+        <!-- Mostra il punteggio attuale come record progressivo -->
+        <p class="progress">PUNTI: {{ score() }} 🏆</p>
+        
+        <!-- Generazione dinamica dei cuori basata sulla difficoltà scelta -->
+        <div class="lives-box">
+          @for (heart of [].constructor(maxLives()); track $index) {
+            {{ $index < lives() ? '❤️' : '🖤' }}
+          }
+        </div>
+
+        <div class="timer-box" [class.warning]="timeLeft() <= 5">
+          ⏱️ {{ timeLeft() }}s
+        </div>
+      </div>
+
+      <!-- Indicatore visivo se il gioco si sta velocizzando -->
+      @if (score() >= 5) {
+        <p class="speed-alert">🔥 VELOCITÀ: +{{ Math.floor(score() / 5) }} 🔥</p>
+      }
+
+      <h2>{{ currentQuestion().text }}</h2>
+
+      <div class="options-grid">
+        @for (option of currentQuestion().options; track $index) {
+          <button 
+            (click)="selectAnswer($index)"
+            [disabled]="selectedAnswer() !== null"
+            [class.correct]="$index === currentQuestion().correctAnswer && selectedAnswer() !== null"
+            [class.incorrect]="$index === selectedAnswer() && selectedAnswer() !== currentQuestion().correctAnswer">
+            {{ option }}
+          </button>
+        }
+      </div>
+
+      @if (selectedAnswer() === -1) {
+        <p class="timeout-msg">⏳ Troppo lento! Sei stato pietrificato dal Basilisco...</p>
+      }
+
+      @if (selectedAnswer() !== null) {
+        <button class="next-btn" (click)="nextQuestion()">
+          Prossima Domanda
+        </button>
+      }
+    </div>
+  } @else {
+    <!-- Schermata Finale dei Risultati con Statistiche Avanzate -->
+    <div class="results-card">
+      <h2 class="game-over-title">💀 SURVIVAL INTERROTTO 💀</h2>
+      <p class="score">Sei sopravvissuto a <strong>{{ score() }}</strong> domande!</p>
+      
+      <!-- Sezione Riepilogo Metriche Avanzate -->
+      <div class="stats-panel">
+        <p class="stat-item">PRECISIONE: {{ accuracyPercentage() }}%</p>
+        <p class="stat-item">TEMPO MEDIO: {{ averageResponseTime() }}s</p>
+      </div>
+
+      <!-- Grafico a Barre Pixelate delle Casate -->
+      <div class="category-chart">
+        <p class="chart-title">[ PRESTAZIONI MAGICHE ]</p>
+        
+        @for (cat of categoryStats(); track cat.name) {
+          <div class="chart-row">
+            <div class="chart-label">{{ cat.name }}</div>
+            <div class="bar-container">
+              <div class="bar-fill" [style.width.%]="cat.percent"></div>
+            </div>
+            <div class="chart-value">{{ cat.percent }}%</div>
+          </div>
+        }
+      </div>
+
+      <button class="restart-btn" (click)="restartQuiz()">Torna al Menu</button>
+    </div>
+  }
+</div>

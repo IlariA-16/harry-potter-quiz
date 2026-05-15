@@ -1,0 +1,310 @@
+@import url('https://googleapis.com');
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* SFONDO (Corvonero: Blu Notte e dettagli Bronzo) */
+  background-color: #0e1a40;
+  background-image: linear-gradient(rgba(148, 107, 45, 0.15) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 107, 45, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'Press Start 2P', monospace;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.quiz-container {
+  width: 100%;
+  max-width: 580px;
+  background: #1a472a; /* Serpeverde: Verde Smeraldo Scuro */
+  border: 5px solid #aaaaaa; /* Argento */
+  box-shadow: 12px 12px 0px #000;
+  padding: 40px 25px;
+  text-align: center;
+  color: #fff;
+}
+
+/* TITOLO PRINCIPALE GRANDE (Tassorosso: Oro) */
+h1 {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #ecb939;
+  margin-top: 0;
+  margin-bottom: 35px;
+  text-shadow: 4px 4px 0px #000;
+  letter-spacing: 1px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+/* TESTO PROGRESSO GRANDE */
+.progress {
+  font-size: 12px;
+  color: #fbeeaa;
+  margin: 0;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.lives-box {
+  font-size: 16px;
+  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+}
+
+/* TIMER GRANDE */
+.timer-box {
+  background: #11301c;
+  border: 4px solid #aaaaaa;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #fff;
+  text-shadow: 2px 2px 0px #000;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.timer-box.warning {
+  background: #ff4757;
+  animation: blink 1s infinite;
+}
+
+/* INDICATORE DI VELOCITÀ ALTA */
+.speed-alert {
+  font-size: 10px;
+  color: #ff007f;
+  margin-top: -10px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* DOMANDA PRINCIPALE BEN LEGGIBILE */
+h2 {
+  font-size: 14px;
+  line-height: 2;
+  color: #ffffff;
+  margin-bottom: 40px;
+  padding: 20px 15px;
+  border: 4px dashed #aaaaaa;
+  background: #11301c;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.options-grid, .difficulty-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+/* PULSANTI GIGANTI STILE CABINATO ARCADE */
+button {
+  width: 100%;
+  padding: 20px 15px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #ffffff;
+  background: #373737;
+  border: 4px solid #aaaaaa;
+  box-shadow: 6px 6px 0px #000;
+  cursor: pointer;
+  text-align: center;
+  text-shadow: 2px 2px 0px #000;
+}
+
+button:hover:not(:disabled) {
+  background: #ecb939;
+  color: #000000;
+  text-shadow: none;
+  box-shadow: 3px 3px 0px #000;
+  transform: translate(3px, 3px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.start-card {
+  padding: 15px 0;
+}
+
+/* SOTTOTITOLO MENU INIZIALE */
+.start-subtitle {
+  font-size: 13px;
+  color: #aaaaaa;
+  margin-bottom: 35px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* PULSANTI DIFFICOLTÀ ESPANSI */
+.diff-btn {
+  font-size: 12px;
+}
+
+.diff-btn span {
+  font-size: 10px;
+  color: #dddddd;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.diff-btn.babbano:hover { background: #2ed573 !important; color: #000000 !important; }
+.diff-btn.mago:hover { background: #ecb939 !important; color: #000000 !important; }
+.diff-btn.auror:hover { background: #ff4757 !important; color: #ffffff !important; }
+
+button.correct:disabled {
+  background: #2ed573 !important;
+  color: #000000 !important;
+  text-shadow: none;
+}
+
+button.incorrect:disabled {
+  background: #ff4757 !important;
+  color: #ffffff !important;
+}
+
+.timeout-msg {
+  color: #ff4757;
+  font-size: 11px;
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+/* PULSANTI DI INTERFACCIA PRINCIPALE (Grifondoro: Scarlatto e Oro) */
+.next-btn, .restart-btn {
+  padding: 20px;
+  font-size: 13px;
+  color: #ecb939;
+  background: #740001;
+  border: 4px solid #ecb939;
+  box-shadow: 6px 6px 0px #000;
+}
+
+.next-btn:hover, .restart-btn:hover {
+  background: #ae0001;
+  box-shadow: 3px 3px 0px #000;
+  transform: translate(3px, 3px);
+}
+
+/* PANNELLO DELLE STATISTICHE DI RIEPILOGO */
+.stats-panel {
+  background: #11301c;
+  border: 4px dashed #aaaaaa;
+  padding: 15px;
+  margin: 25px 0;
+  text-align: left;
+}
+
+.stat-item {
+  font-size: 11px;
+  line-height: 2;
+  color: #ffffff;
+  margin: 5px 0;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* STRUTTURA DEL GRAFICO A BARRE PIXELATO */
+.category-chart {
+  margin: 35px 0;
+  text-align: left;
+}
+
+.chart-title {
+  font-size: 11px;
+  color: #ecb939;
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.chart-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+
+.chart-label {
+  font-size: 9px;
+  width: 140px;
+  color: #fbeeaa;
+  white-space: nowrap;
+  text-shadow: 2px 2px 0px #000;
+}
+
+.bar-container {
+  flex-grow: 1;
+  background: #373737;
+  border: 3px solid #aaaaaa;
+  height: 18px;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.bar-fill {
+  background: #ecb939;
+  height: 100%;
+  transition: width 0.4s ease-out;
+}
+
+.chart-value {
+  font-size: 9px;
+  width: 50px;
+  text-align: right;
+  color: #ffffff;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* SCHERMATA DI FINE PARTITA */
+.results-card h2 {
+  color: #ecb939;
+  font-size: 18px;
+  border: none;
+  background: transparent;
+}
+
+.game-over-title {
+  color: #ff4757 !important;
+  font-size: 18px !important;
+  margin-bottom: 25px;
+  animation: pulse 1.5s infinite;
+}
+
+.score {
+  font-size: 13px;
+  line-height: 2;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.score strong {
+  color: #ecb939;
+}
+
+.rank {
+  font-size: 11px;
+  line-height: 2;
+  color: #fbeeaa;
+  margin-bottom: 25px;
+}
+
+/* ANIMAZIONI RETRO */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
